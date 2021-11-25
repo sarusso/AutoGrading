@@ -1,0 +1,13 @@
+# Byte-compiled & optimised
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Eclipse
+.project
+.pydevproject
+.settings
+
+# OSX
+.DS_Store
+

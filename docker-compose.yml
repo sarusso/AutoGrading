@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  webapp:
+    image: "autograding/webapp"
+    container_name: webapp
+    hostname: webapp
+    environment:
+      - LOG_LEVEL=DEBUG
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      #- ./services/webapp/code:/opt/webapp/code
+ 

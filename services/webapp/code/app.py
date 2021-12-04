@@ -1,6 +1,6 @@
 import logging
-from flask import Flask
-from utils import os_shell
+from flask import Flask, render_template, request
+import uuid
 
 # Set up logging
 logging.basicConfig(format="[%(levelname)s] %(asctime)s %(message)s", level=logging.DEBUG)
@@ -8,13 +8,19 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-@app.route("/")
-def hello():
-    
-    # Run the hello world docker container from the OS shell
-    #logger.debug(os_shell('sudo docker run hello-world', capture=True)
 
-    # Get who am I from the OS shell
-    whoami = os_shell('whoami', capture=True).stdout
-    
-    return 'Hello, World! I am running as "{}".'.format(whoami)
+@app.route("/", methods=["GET"])
+def menu():
+    return render_template("menu.html")
+
+
+@app.route("/", methods=["GET", "POST"])
+def upload_file():
+    if request.method == "POST":
+        f = request.files["file"]
+        f.save("tmp/" + str(uuid.uuid4()) + ".py")
+        return render_template("upload.html")
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

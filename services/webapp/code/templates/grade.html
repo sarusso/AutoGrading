@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles.css') }}">
+    <title>Laboratorio di Programmazione - Autograding</title>
+  </head>
+  <body>
+    <h1>Laboratorio di Programmazione - Autograding - results</h1>
+    {% if data.shell_out.exit_code != 0 %}
+      <p style='color:#ffffff'>
+      Hai avuto un errore:
+      </p>
+      <pre style='color:#ffffff'>
+      {{ data.shell_out.stderr}}
+      </pre>    
+    {% else %}
+      <pre style='color:#ffffff'>
+      {{ data.shell_out.stdout }}
+      </pre>
+    {% endif %}
+    <br>
+    <div id="footer">
+      <p>Federico Pigozzi e Stefano Alberto Russo, 2021</p>
+    </div>
+  </body>
+</html>

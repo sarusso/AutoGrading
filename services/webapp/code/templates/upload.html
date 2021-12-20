@@ -5,10 +5,15 @@
     <title>Laboratorio di Programmazione - Autograding</title>
   </head>
   <body>
-    <h1>Laboratorio di Programmazione - Autograding</h1>
-    <div id="main">
-      <p>File caricato con successo</p>
-    </div>
+    <h1>Laboratorio di Programmazione - Autograding - seleziona esame</h1>
+    <form id="esami" action="/upload" method="POST" enctype="multipart/form-data">
+      <select id="examMenu" name="Esami">
+        <option value="dd/mm/yyyy">dd/mm/yyyy</option>
+      </select>
+    </form>
+    <form id="inviaEsami" name="Esami" action="/upload" method="POST">
+      <button type="submit">Invia</button>
+    </form>
     <br>
     <div id="footer">
       <p>Federico Pigozzi e Stefano Alberto Russo, 2021</p>

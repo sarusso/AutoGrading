@@ -1,3 +1,4 @@
+import os
 import uuid
 import logging
 
@@ -13,17 +14,30 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def menu():
-    # render opening menu page
+    # Render opening menu page
     return render_template("menu.html")
 
 
 @app.route("/", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
+        
         f = request.files["file"]
-        # save user file with unique id
-        f.save("/tmp/" + str(uuid.uuid4()) + ".py")
-        # render
+        uuid_str = str(uuid.uuid4())
+        
+        # Save user file with unique id
+        destination_folder = "/shared/{}".format(uuid_str)
+        destination_file = destination_folder + "/esame.py"
+        try:
+            os.makedirs(destination_folder)
+        except PermissionError:
+            os_shell("sudo chmod 777 /shared")
+            os.makedirs(destination_folder)
+            
+        f.save(destination_file)
+        logger.debug("Saved file to '%s'", destination_file)
+        
+        # Render
         return render_template("upload.html")
 
 
@@ -35,19 +49,19 @@ def grade():
     
         # Create the docker run command.
         # TODO: let's start by just executing the Python script uploaded by the user
-        command = "sudo docker run -it -v shared/uuid_dir:/data python:3.8 /data/tester.py"  # 'sudo docker run hello-world'
+        command = "sudo docker run -v /tmp/autograding_shared/:/shared python:3.8 ls -alh /shared"
     
         # Log the shell command going to be execute
-        logger.debug('Shell executing command: "%s"', command)
+        logger.debug("Shell executing command: \"%s\"", command)
     
         # Execute the command and capture the output
         out = os_shell(command, capture=True)
     
         # Log the output
-        logger.debug('Shell output: "%s"', out)
+        logger.debug("Shell output: \"%s\"", out)
     
         # Set the output in the page data
-        data['shell_out'] = out
+        data["shell_out"] = out
 
         # Render
         return render_template("grade.html", data=data)

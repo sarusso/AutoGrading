@@ -12,5 +12,5 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./services/webapp/code:/opt/webapp/code
-      - ./shared:/shared
+      - /tmp/autograding_shared:/shared
  

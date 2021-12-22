@@ -38,7 +38,7 @@ def upload_file_and_exam():
     logger.debug("Saved file to '%s'", destination_file)
 
     # Save exam file in the same dir
-    source_exam_file = "/opt/webapp/code/" + exam_file
+    source_exam_file = "/opt/webapp/code/tests/" + exam_file
 
     os_shell(" ".join(["cp", source_exam_file, destination_folder]))
     logger.debug("Copied file to '%s'", source_exam_file)

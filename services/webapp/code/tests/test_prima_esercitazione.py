@@ -1,4 +1,3 @@
-#!/bin/python
 from esame import MovingAverage, ExamException
 
 import unittest
@@ -109,4 +108,5 @@ class TestAndGrade(unittest.TestCase):
 
 
 # Run the tests
-unittest.main()
+if __name__ == "__main__":
+    unittest.main()

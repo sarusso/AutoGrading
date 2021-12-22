@@ -6,9 +6,13 @@
   </head>
   <body>
     <h1>Laboratorio di Programmazione - Autograding - menu</h1>
-    <form id="fileUpload" action="/" method="POST" enctype="multipart/form-data">
+    <form id="fileUpload" action="/upload" method="POST" enctype="multipart/form-data">
       <input type="file" name="file"/>
       <p>Trascina il file qui o clicca quest'area</p>
+      <select id="examMenu" name="esami">
+        <option value="" disabled selected>Seleziona la data d'esame</option>
+        <option value="prima esercitazione">prima esercitazione</option>
+      </select>
       <button type="submit">Upload</button>
     </form>
     <br>

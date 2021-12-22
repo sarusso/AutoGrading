@@ -34,14 +34,14 @@ h1{
   outline: none;
   opacity: 0;
 }
-#fileUpload button{
+form button{
   margin: 0;
   color: #fff;
   background: #16a085;
   border: none;
   width: 500px;
   height: 35px;
-  margin-top: -20px;
+  margin-top: 125px;
   margin-left: -4px;
   border-radius: 4px;
   border-bottom: 4px solid #117A60;
@@ -50,7 +50,7 @@ h1{
   font-family: Arial;
   font-size: 16px;
 }
-#fileUpload button:hover{
+form button:hover{
   background: #149174;
   color: #0C5645;
 }
@@ -77,29 +77,11 @@ h1{
   font-family: Arial;
   font-size: 16px;
 }
-#inviaEsami button {
-  color: #fff;
-  background: #16a085;
-  border: none;
-  width: 100px;
-  height: 35px;
-  margin-top: 200px;
-  margin-left: 550px;
-  border-radius: 4px;
-  border-bottom: 4px solid #117A60;
-  outline: none;
-  font-family: Arial;
-  font-size: 16px;
-}
-#inviaEsami button:hover{
-  background: #149174;
-  color: #0C5645;
-}
 #esami {
-  margin-top: 200px;
-  margin-left: 550px;
-  width: 100px;
-  height: 35px;
+  margin-top: 500px;
+  margin-left: 600px;
+  width: 300px;
+  height: 70px;
   font-family: Arial;
   font-size: 16px;
 }

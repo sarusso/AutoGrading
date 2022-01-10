@@ -5,22 +5,30 @@
     <title>Laboratorio di Programmazione - Autograding</title>
   </head>
   <body>
-    <h1>Laboratorio di Programmazione - Autograding - results</h1>
+    <h1 style="margin-top:60px">Laboratorio di Programmazione - Autograding - results</h1>
     {% if data.shell_out.exit_code != 0 %}
       <p id="main">
-      Hai avuto un errore:
+      <b>Risultati</b> [<a href="/" style="color:#ffffff">indietro</a>]
+      <b>Attenzione:</b> hai avuto uno o più errori, se non vedi nessun voto è perchè hanno compromesso l'intera valutazione.
       </p>
-      <pre style='color:#ffffff'>
-      {{ data.shell_out}}
-      </pre>    
     {% else %}
-      <pre style='color:#ffffff'>
-      {{ data.shell_out.stdout }}
-      </pre>
+      <p id="main">
+      <b>Risultati</b> [<a href="/" style="color:#ffffff">indietro</a>]
+      </p>
     {% endif %}
-    <br>
+    <pre style='color:#ffffff; margin:30px'>
+    {{ data.shell_out.stderr}}
+    </pre> 
+    <pre style='color:#ffffff; margin:30px'>
+    {{ data.shell_out.stdout}}
+    </pre> 
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <div id="footer">
-      <p>Federico Pigozzi e Stefano Alberto Russo, 2021</p>
+      <p align="right", style="margin-right:30px">Federico Pigozzi e Stefano Alberto Russo, 2022</p>
     </div>
   </body>
 </html>

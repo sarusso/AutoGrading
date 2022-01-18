@@ -59,6 +59,7 @@ form button:hover{
 }
 #footer{
   position: fixed;
+  z-index:-1;
   float: left;
   padding-bottom: 10px;
   padding-top: 10px;

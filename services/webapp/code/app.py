@@ -50,7 +50,7 @@ def grade(user_id, exam):
     # Initialize page data
     data = {}
     # Create the docker run command.
-    command = "sudo docker run -v /tmp/autograding_shared/:/shared python:3.8 /bin/bash -c 'cd /shared/" + user_id + " && python -m unittest discover'"
+    command = "sudo docker run --memory=\"256m\" --cpus=\"0.1\" -v /tmp/autograding_shared/:/shared python:3.8 /bin/bash -c 'cd /shared/" + user_id + " && python -m unittest discover'"
     
     # Log the shell command going to be execute
     logger.debug("Shell executing command: \"%s\"", command)

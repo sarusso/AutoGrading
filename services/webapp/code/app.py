@@ -59,7 +59,8 @@ def grade(uuid_str):
     data = {}
     
     # Create the docker run command.
-    command = "sudo docker run --memory=\"256m\" --cpus=\"0.1\" -v /tmp/autograding_shared/:/shared autograding/evaluator /bin/bash -c 'cd /shared/" + uuid_str + " && python3 -m unittest discover'"
+    # To restrict RAM: --memory=\"256m\"
+    command = "sudo docker run --cpus=\"0.1\" -v /tmp/autograding_shared/:/shared autograding/evaluator /bin/bash -c 'cd /shared/" + uuid_str + " && python3 -m unittest discover'"
     
     # Log the shell command going to be execute
     logger.debug("Shell executing command: \"%s\"", command)

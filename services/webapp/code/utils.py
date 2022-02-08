@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 def sanitize_shell_encoding(text):
-    return text.encode("utf-8", errors="ignore")
+    return text.encode("utf-8", errors="ignore").decode("utf-8")
 
 
 def format_shell_error(stdout, stderr, exit_code):

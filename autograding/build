@@ -30,6 +30,7 @@ if [[ "x$SERVICE" == "x" ]] ; then
     
     # Build all services
     $BUILD_COMMAND services/webapp -t autograding/webapp
+    $BUILD_COMMAND services/evaluator -t autograding/evaluator
 
     
 else

@@ -21,36 +21,45 @@ def menu():
 @app.route("/upload", methods=["POST"])
 def upload_file_and_exam():
 
-    f = request.files["file"]
-    exam_file = "test_" + request.form["esami"].replace(" ", "_") + ".py"
+    # Generate a grading session uuid
     uuid_str = str(uuid.uuid4())
         
-    # Save user file with unique id
+    # Set the grading directory folder with the grading session uuid
     destination_folder = "/shared/{}".format(uuid_str)
-    destination_file = destination_folder + "/esame.py"
+
+    # Get uploaded exam file
+    f = request.files["file"]
+    
+    # Save uploaded exam file in the grading directory
+    exam_file = destination_folder + "/esame.py"
     try:
         os.makedirs(destination_folder)
     except PermissionError:
         os_shell("sudo chmod 777 /shared")
         os.makedirs(destination_folder)
-            
-    f.save(destination_file)
-    logger.debug("Saved file to '%s'", destination_file)
+    f.save(exam_file)
+    logger.debug("Saved exam file to '%s'", exam_file)
 
-    # Save exam file in the same dir
-    source_exam_file = "/opt/webapp/code/tests/" + exam_file
+    # Set exam tests file
+    exam_tests_file = "test_" + request.form["esami"] + ".py"
+    logger.debug("Set exam tests file to '%s'", exam_tests_file)
 
+    # Save exam tests file in the grading directory as well
+    source_exam_file = "/opt/webapp/code/tests/" + exam_tests_file
     os_shell(" ".join(["cp", source_exam_file, destination_folder]))
-    logger.debug("Copied file to '%s'", source_exam_file)
+    logger.debug("Copied tests file to '%s'", source_exam_file)
 
-    return grade(uuid_str, exam_file)
+    # Grade and return
+    return grade(uuid_str)
 
 
-def grade(user_id, exam):
+def grade(uuid_str):
+    
     # Initialize page data
     data = {}
+    
     # Create the docker run command.
-    command = "sudo docker run --memory=\"256m\" --cpus=\"0.1\" -v /tmp/autograding_shared/:/shared python:3.8 /bin/bash -c 'cd /shared/" + user_id + " && python -m unittest discover'"
+    command = "sudo docker run --memory=\"256m\" --cpus=\"0.1\" -v /tmp/autograding_shared/:/shared autograding/evaluator /bin/bash -c 'cd /shared/" + uuid_str + " && python3 -m unittest discover'"
     
     # Log the shell command going to be execute
     logger.debug("Shell executing command: \"%s\"", command)

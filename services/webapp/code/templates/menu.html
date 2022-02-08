@@ -5,20 +5,41 @@
     <title>Laboratorio di Programmazione - Autograding</title>
   </head>
   <body>
+    <div id="evaluating" class="evaluating">Valutazione...</div>
     <h1 style="margin-top:60px">Laboratorio di Programmazione - Autograding - menu</h1>
     <form id="fileUpload" action="/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file"/>
-      <p>Trascina il file qui o clicca quest'area</p>
+      <input type="file" name="file" onchange="show_file_name(this)" >
+      <p id='file_name_p'>Trascina il file qui o clicca quest'area</p>
       <font color="#ffffff">Compito da valutare: </font> 
       <select id="examMenu" name="esami">
         <option value="prima esercitazione">prima esercitazione</option>
         <option value="seconda esercitazione">seconda esercitazione</option>
       </select>
-      <button type="submit">Valuta</button>
+      <button type="submit" onclick="loading()">Valuta</button>
     </form>
     <br>
     <div id="footer">
-      <p align="right", style="margin-right:30px">Federico Pigozzi e Stefano Alberto Russo, 2022</p>
+      <p align="right" style="margin-right:30px">Federico Pigozzi e Stefano Alberto Russo, 2022</p>
     </div>
   </body>
+<script type="text/javascript">
+function show_file_name(file_input) {
+    console.log(file_input.files[0].name)
+    
+    var file_name_p = document.getElementById("file_name_p");
+    file_name_p.innerHTML = file_input.files[0].name
+
+    
+    var evaluating_div = document.getElementById("evaluating");
+    evaluating_div.innerHTML = "Valutazione di '" + file_input.files[0].name + "' ..."
+    
+    
+    }
+function loading(){
+    var evaluating_div = document.getElementById("evaluating");
+    evaluating_div.style.display = 'block'
+    }
+</script>
 </html>
+
+

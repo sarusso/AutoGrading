@@ -31,4 +31,4 @@ RUN python3 get-pip.py 'pip==21.0.1'
 # Python requirements
 #------------------------------
 
-RUN pip3 install python-dateutil==2.8.2
+RUN pip3 install python-dateutil==2.8.2 numpy

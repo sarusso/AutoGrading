@@ -25,7 +25,7 @@ h1{
   color: #ffffff;
   font-family: Arial;
 }
-#fileUpload input{
+#fileUploadInput {
   position: absolute;
   margin: 0;
   padding: 0;
@@ -41,7 +41,7 @@ form button{
   border: none;
   width: 500px;
   height: 35px;
-  margin-top: 125px;
+  margin-top: 40px;
   margin-left: -4px;
   border-radius: 4px;
   border-bottom: 4px solid #117A60;
@@ -103,4 +103,14 @@ div.evaluating {
   font-size: 22px;
   color: #fff;
   display:none
+}
+#fileUrl{
+  outline: none;
+  border:#c0c0c0;
+  background-image:none;
+  background-color:transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background:#ffffff
 }

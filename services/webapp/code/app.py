@@ -1,6 +1,7 @@
 import os
 import uuid
 import logging
+import requests
 
 from flask import Flask, render_template, request
 from utils import os_shell
@@ -27,17 +28,31 @@ def upload_file_and_exam():
     # Set the grading directory folder with the grading session uuid
     destination_folder = "/shared/{}".format(uuid_str)
 
-    # Get uploaded exam file
-    f = request.files["file"]
-    
-    # Save uploaded exam file in the grading directory
-    exam_file = destination_folder + "/esame.py"
+    # Set destination dir
     try:
         os.makedirs(destination_folder)
     except PermissionError:
         os_shell("sudo chmod 777 /shared")
         os.makedirs(destination_folder)
-    f.save(exam_file)
+
+    # Set the destination exam file
+    exam_file = destination_folder + "/esame.py"
+    
+    # Get and save uploaded exam file or from URL
+    try:
+        url = request.form["url"]
+        if not url:
+            raise KeyError
+        logger.debug('Getting file from "{}"'.format(url))
+        r = requests.get(url, allow_redirects=True)
+        with open(exam_file, 'wb') as f:
+            f.write(r.content)
+    except KeyError:
+        f = request.files["file"]
+        f.save(exam_file)
+        logger.debug('Uploaded file')
+
+    
     logger.debug("Saved exam file to '%s'", exam_file)
 
     # Set exam tests file

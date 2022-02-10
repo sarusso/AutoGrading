@@ -42,7 +42,7 @@ RUN apt-get install docker.io -y
 #------------------------------
 
 # Install Flask
-RUN pip install flask==2.0.2
+RUN pip install flask==2.0.2 requests
 
 
 #------------------------------

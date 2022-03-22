@@ -1,4 +1,7 @@
-from esame import CSVFile
+try:
+    from esame import CSVFile4 as CSVFile
+except ImportError:
+    from esame import CSVFile
 
 import unittest
 import tempfile
@@ -34,17 +37,17 @@ class TestAndGrade(unittest.TestCase):
                     timestamp = timestamp + relativedelta(months=1)
             file.seek(0)
 
-            # Check correct sum
+            # Check correct data
             csv_file = CSVFile(file.name)
             data = csv_file.get_data()
 
             self.assertEqual(len(data), 36)
             
             self.assertEqual(data[0][0], '1949-01')
-            self.assertEqual(str(data[0][1]), '1') # Conversion to numerical is the next lesson
+            self.assertEqual(data[0][1], '1') # Conversion to numerical is the next lesson
 
             self.assertEqual(data[-1][0], '1951-12')
-            self.assertEqual(str(data[-1][1]), '36') # Conversion to numerical is the next lesson
+            self.assertEqual(data[-1][1], '36') # Conversion to numerical is the next lesson
                              
             global score; score += 6 # Increase score  
 
@@ -66,7 +69,7 @@ class TestAndGrade(unittest.TestCase):
             
             file.write('Date,Sales\n')
             file.write('1949-01,1\n')
-            file.write('1949-03,1\n')
+            file.write('1949-02,1\n')
             file.seek(0)
     
             csv_file = CSVFile(name = file.name)

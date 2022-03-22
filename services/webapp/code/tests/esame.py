@@ -46,7 +46,53 @@ def sum_csv(the_file):
         return sum_list(values)
 
 
-# lezione 4 e 5, TODO: anche logica della lezione 6
+# Lezione 4
+class CSVFile4:
+
+    def __init__(self, name):
+        
+        # Setto il nome del file
+        self.name = name
+        
+
+    def get_data(self):
+        
+        # Inizializzo una lista vuota per salvare tutti i dati
+        data = []
+
+        # Apro il file
+        my_file = open(self.name, 'r')
+
+        # Leggo il file linea per linea
+        for line in my_file:
+            
+            # Faccio lo split di ogni linea sulla virgola
+            elements = line.split(',')
+            
+            # Posso anche pulire il carattere di newline 
+            # dall'ultimo elemento con la funzione strip():
+            elements[-1] = elements[-1].strip()
+            
+            # p.s. in realta' strip() toglie anche gli spazi
+            # bianchi all'inizio e alla fine di una stringa.
+
+            # Se NON sto processando l'intestazione...
+            if elements[0] != 'Date':
+                    
+                # Aggiungo alla lista gli elementi di questa linea
+                data.append(elements)
+        
+        # Chiudo il file
+        my_file.close()
+        
+        # Quando ho processato tutte le righe, ritorno i dati
+        return data
+
+
+# Lezione 5a
+# Questo deve chiamarsi cosi' perche' viene importato via python -c
+# e risulta quindi difficile fare try-execpe con CSVFile5
+
 class CSVFile:
 
     def __init__(self, name):
@@ -107,6 +153,127 @@ class CSVFile:
             # Quando ho processato tutte le righe, ritorno i dati
             return data
 
+
+
+# Lezione 5b
+class NumericalCSVFile(CSVFile):
+    
+    def get_data(self):
+        numerical_data = []
+        string_data = super().get_data()
+        
+        for i, line in enumerate(string_data):
+            line_as_numerical = []
+            try:
+                for j, item in enumerate(line):
+                    if j == 0:
+                        line_as_numerical.append(item)
+                    else:
+                        line_as_numerical.append(float(item))
+                numerical_data.append(line_as_numerical)
+            except:
+                print('Errore, impossibile convertire il valore "{}" della linea {} a numerico (float)'.format(item,i))
+        return numerical_data
+
+
+# Lezione 6
+class CSVFile6:
+
+    def __init__(self, name):
+        
+        if not isinstance(name,str):
+            raise TypeError('Nome del file non stringa')
+        
+        # Setto il nome del file
+        self.name = name
+        
+        # Provo ad aprirlo e leggere una riga
+        self.can_read = True
+        try:
+            my_file = open(self.name, 'r')
+            my_file.readline()
+        except Exception as e:
+            self.can_read = False
+            print('Errore in apertura del file: "{}"'.format(e))
+
+
+    def get_data(self, start=None, end=None):
+
+        # Check start/end        
+        if start is not None:
+            try:
+                start = int(start)
+            except:
+                raise TypeError('Start non interpretabile come intero ("{}")'.format(start))
+            if start <= 0:
+                raise ValueError('Start minore o uguale a zero ("{}")'.format(start))
+        if end is not None:
+            try:
+                end = int(end)
+            except:
+                raise TypeError('Start non interpretabile come intero ("{}")'.format(end))
+            if end <= 0:
+                raise ValueError('End minore o uguale a zero ("{}")'.format(end))
+
+        if start is not None and end is not None and start > end:
+            raise ValueError('Start maggiore di end! start="{}", end="{}"'.format(start,end))         
+        
+        if not self.can_read:
+            
+            # Se nell'init ho settato can_read a False vuol dire che
+            # il file non poteva essere aperto o era illeggibile
+            print('Errore, file non aperto o illeggibile')
+            
+            # Esco dalla funzione tornando "niente".
+            return None
+
+        else:
+            # Inizializzo una lista vuota per salvare tutti i dati
+            data = []
+    
+            # Apro il file
+            my_file = open(self.name, 'r')
+
+            # Leggo il file linea per linea
+            for i, line in enumerate(my_file):
+                
+                # Faccio lo split di ogni linea sulla virgola
+                elements = line.split(',')
+                
+                # Posso anche pulire il carattere di newline 
+                # dall'ultimo elemento con la funzione strip():
+                elements[-1] = elements[-1].strip()
+                
+                # p.s. in realta' strip() toglie anche gli spazi
+                # bianchi all'inizio e alla fine di una stringa.
+    
+                # Se NON sto processando l'intestazione...
+                if elements[0] != 'Date':
+                    
+                    # Aggiungo alla lista gli elementi di questa linea se devo
+                    if start is not None and end is None:
+                        if i+1 >= start:
+                            data.append(elements)
+                    elif end is not None and start is None:
+                        if i+1 <= end:
+                            data.append(elements)
+                    elif start is not None and end is not None:
+                        if i+1 >= start and i+1 <= end:
+                            data.append(elements)  
+                    else:
+                        data.append(elements)
+
+            if start is not None and start > i:
+                raise ValueError('Start maggiore del totale delle righe del file (end="{}", righe="{}"'.format(start, i))
+            
+            if end is not None and end > i:
+                raise ValueError('End maggiore del totale delle righe del file (end="{}", righe="{}"'.format(end, i))
+
+            # Chiudo il file
+            my_file.close()
+            
+            # Quando ho processato tutte le righe, ritorno i dati
+            return data
 
 
 

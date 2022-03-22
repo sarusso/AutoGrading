@@ -1,5 +1,6 @@
 from esame import sum_csv
 
+import sys
 import unittest
 import tempfile
 import datetime
@@ -8,6 +9,11 @@ from dateutil.relativedelta import relativedelta
 score = 0
 
 class TestAndGrade(unittest.TestCase):
+
+    def setUp(self):
+        if not sys.warnoptions:
+            import warnings
+            warnings.simplefilter("ignore")
 
     def test_correctness(self):
 

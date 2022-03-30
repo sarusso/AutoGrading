@@ -275,6 +275,43 @@ class CSVFile6:
             # Quando ho processato tutte le righe, ritorno i dati
             return data
 
+# Lezione 8
+class Model():
+
+    def fit(self, data):
+        # Fit non implementanto nella classe base
+        raise NotImplementedError('Metodo non implementato')
+
+    def predict(self, data):
+        # Predict non implementanto nella classe base
+        raise NotImplementedError('Metodo non implementato')
+
+
+class IncrementModel(Model):
+    
+    def predict(self, data):
+        
+        if not isinstance(data, list):
+            raise TypeError('Data "{}" is not of type list (got "{}")'.format(data, data.__class__.__name__))
+        else:
+            for item in data:
+                if not (isinstance(item, int) or isinstance(item, float)):
+                    raise TypeError('Item "{}" if not of type int or float (got "{}")'.format(item, item.__class__.__name__))
+        
+        if len(data) <=1:
+            raise ValueError('List has less than 2 elements, cannot compute increments')
+        
+        prev_item = None
+        increments = []
+        for item in data:
+            if prev_item is None:
+                prev_item = item
+            else:
+                increments.append(item-prev_item)
+                prev_item = item
+        avg_increment = sum(increments)/len(increments)
+        return data[-1] + avg_increment
+
 
 
 #==============================

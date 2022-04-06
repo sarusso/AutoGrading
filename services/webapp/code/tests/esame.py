@@ -286,9 +286,39 @@ class Model():
         # Predict non implementanto nella classe base
         raise NotImplementedError('Metodo non implementato')
 
+    def evaluate(self, data):
+        
+        if not self.window_length:
+            raise ValueError('Cannot evaluate a model without a window_length set')
+        
+            if len(data) <= self.window_length:
+                raise ValueError('Evaluation data legth ({}) is less or equal to the  window legth ({}), cannot evaluate'.format(len(data), self.window_length))
+        
+        # Set empty errors list
+        errors=[]
+        
+        # Loop over all the windows of the data
+        for window_offset in range(len(data)-self.window_length):
+            
+            # Define the evaluation dtaa for this window
+            evaluation_window_data = data[window_offset:window_offset+self.window_length]
+            
+            # Get actual and predicted
+            predicted = self.predict(evaluation_window_data)
+            actual = data[self.window_length+window_offset]
+
+            # Add the (absolute) error
+            errors.append(abs( actual - predicted))
+
+        # Return the average absolute error
+        return sum(errors)/float(len(errors))
+
 
 class IncrementModel(Model):
-      
+    
+    def __init__(self, window_length=None):
+        self.window_length = window_length
+    
     def check_data(self, data):
         
         # Check data type
@@ -321,6 +351,10 @@ class IncrementModel(Model):
 
     def predict(self, data):
 
+        if self.window_length:
+            if len(data) != self.window_length:
+                raise ValueError('Input data legth ({}) does not match the window legth ({})'.format(len(data), self.window_length))
+
         # Check data        
         self.check_data(data)
 
@@ -344,6 +378,11 @@ class FitIncrementModel(IncrementModel):
         self.global_avg_increment = self.compute_avg_increment(data)
     
     def predict(self, data):
+
+        if self.window_length:
+            if len(data) != self.window_length:
+                raise ValueError('Input data legth ({}) does not match the window legth ({})'.format(len(data), self.window_length))
+
 
         # Check data        
         self.check_data(data)

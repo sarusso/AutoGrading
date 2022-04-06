@@ -288,19 +288,25 @@ class Model():
 
 
 class IncrementModel(Model):
-    
-    def predict(self, data):
+      
+    def check_data(self, data):
         
+        # Check data type
         if not isinstance(data, list):
             raise TypeError('Data "{}" is not of type list (got "{}")'.format(data, data.__class__.__name__))
         else:
+            # Check data items type
             for item in data:
                 if not (isinstance(item, int) or isinstance(item, float)):
-                    raise TypeError('Item "{}" if not of type int or float (got "{}")'.format(item, item.__class__.__name__))
-        
+                    raise TypeError('Item "{}" if not of type int or float (got "{}")'.format(item, item.__class__.__name__))        
+    
+    def compute_avg_increment(self, data):
+
+        # Check we can actually compyte an increment
         if len(data) <=1:
             raise ValueError('List has less than 2 elements, cannot compute increments')
-        
+
+        # Compute the sum of the increments
         prev_item = None
         increments = []
         for item in data:
@@ -309,9 +315,44 @@ class IncrementModel(Model):
             else:
                 increments.append(item-prev_item)
                 prev_item = item
-        avg_increment = sum(increments)/len(increments)
-        return data[-1] + avg_increment
+        
+        # Return the average increment
+        return sum(increments)/float(len(increments))        
 
+    def predict(self, data):
+
+        # Check data        
+        self.check_data(data)
+
+        # Compute average increment for the window data
+        window_avg_increment = self.compute_avg_increment(data)
+        
+        # Return the prediction
+        return data[-1] + window_avg_increment
+
+
+# Lezione 9
+
+class FitIncrementModel(IncrementModel):
+    
+    def fit(self, data):
+        
+        # Check data        
+        self.check_data(data)
+        
+        # Fit by computing the global average increment
+        self.global_avg_increment = self.compute_avg_increment(data)
+    
+    def predict(self, data):
+
+        # Check data        
+        self.check_data(data)
+
+        # Compute average increment for the window data
+        window_avg_increment = self.compute_avg_increment(data)
+
+        # Return the prediction, computed by averaging the gloabal increment and the window increment
+        return data[-1] + (self.global_avg_increment + window_avg_increment)/2.0
 
 
 #==============================

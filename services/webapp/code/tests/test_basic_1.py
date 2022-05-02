@@ -9,7 +9,23 @@ class TestAndGrade(unittest.TestCase):
         
         out = os_shell('L1=True python3 esame.py', capture=True)
         
-        self.assertEqual(out.stdout.lower(), 'hello world!')
+        ref_out = """1: January, 31
+2: February, 28
+3: March, 31
+4: April, 31
+5: May, 30
+6: June, 31
+7: July, 30
+8: August, 31
+9: September, 30
+10: October, 31
+11: November, 30
+12: December, 31"""
+
+        #print(out.stdout.strip())
+        #print(ref_out.strip())
+        
+        self.assertEqual(out.stdout.strip(), ref_out.strip())
         global score; score += 10 # Increase score  
 
 

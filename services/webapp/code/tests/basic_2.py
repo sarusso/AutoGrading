@@ -1,4 +1,6 @@
 
+# Excercise 2: Write a function that sums all the numbers of a list.
+
 def sum_list(the_list):
     if not the_list:
         return None

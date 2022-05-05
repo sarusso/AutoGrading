@@ -12,10 +12,10 @@ class TestAndGrade(unittest.TestCase):
         ref_out = """1: January, 31
 2: February, 28
 3: March, 31
-4: April, 31
-5: May, 30
-6: June, 31
-7: July, 30
+4: April, 30
+5: May, 31
+6: June, 30
+7: July, 31
 8: August, 31
 9: September, 30
 10: October, 31

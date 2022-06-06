@@ -2,18 +2,18 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles.css') }}">
-    <title>Laboratorio di Programmazione - Autograding</title>
+    <title>Python courses Autograding</title>
   </head>
   <body>
-    <h1 style="margin-top:60px">Laboratorio di Programmazione - Autograding - results</h1>
+    <h1 style="margin-top:60px">Python courses Autograding - results</h1>
     {% if data.shell_out.exit_code != 0 %}
       <p id="main">
-      <b>Risultati</b> [<a href="/" style="color:#ffffff">indietro</a>]
-      <b>Attenzione:</b> hai avuto uno o più errori, se non vedi nessun voto è perchè hanno compromesso l'intera valutazione.
+      <b>Results</b> [<a href="/" style="color:#ffffff">back</a>]
+      <b>Warning:</b> you got one or more errors, if you don't see any mark this is because the invalidated the entire evaluation process.
       </p>
     {% else %}
       <p id="main">
-      <b>Risultati</b> [<a href="/" style="color:#ffffff">indietro</a>]
+      <b>Results</b> [<a href="/" style="color:#ffffff">back</a>]
       </p>
     {% endif %}
     <pre style='color:#ffffff; margin:30px'>

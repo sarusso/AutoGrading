@@ -2,19 +2,19 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href= "{{ url_for('static',filename='styles.css') }}">
-    <title>Laboratorio di Programmazione - Autograding</title>
+    <title>Python courses Autograding</title>
   </head>
   <body>
-    <div id="evaluating" class="evaluating">Valutazione...</div>
-    <h1 style="margin-top:60px">Laboratorio di Programmazione - Autograding - menu</h1>
+    <div id="evaluating" class="evaluating">Evaluating...</div>
+    <h1 style="margin-top:60px">Python courses Autograding - menu</h1>
     <form id="fileUpload" action="/upload" method="POST" enctype="multipart/form-data">
       <input id="fileUploadInput" type="file" name="file" onchange="show_file_name(this)" >
-      <p id='file_name_p'>Trascina il file qui o clicca quest'area</p>
+      <p id='file_name_p'>Drag and drop or click here</p>
       <br/>
-      <input type="text" id="fileUrl" size=70 name="url" placeholder="Oppure, inserisci URL al file">
+      <input type="text" id="fileUrl" size=70 name="url" placeholder="Otherwise, paste here the URL to the file">
       <br/>
       <br/>
-      <font color="#ffffff">Compito da valutare: </font> 
+      <font color="#ffffff">What to evaluate: </font> 
       <select id="examMenu" name="esami">
         <option value="lezione_1">Lezione 1</option>
         <option value="lezione_2">Lezione 2</option>
@@ -32,8 +32,10 @@
         <option value="basic_1">Python Basic Course exercise one</option>
         <option value="basic_2">Python Basic Course exercise two</option>
         <option value="basic_3">Python Basic Course exercise three</option>
+        <option value="advanced_1">Python Advanced Course exercise one</option>
+        <option value="advanced_2">Python Advanced Course exercise two</option>
       </select>
-      <button type="submit" onclick="loading()">Valuta</button>
+      <button type="submit" onclick="loading()">Evaluate!</button>
     </form>
 
     <br>
@@ -50,7 +52,7 @@ function show_file_name(file_input) {
 
     
     var evaluating_div = document.getElementById("evaluating");
-    evaluating_div.innerHTML = "Valutazione di '" + file_input.files[0].name + "' ..."
+    evaluating_div.innerHTML = "Evaluating '" + file_input.files[0].name + "' ..."
     
     
     }

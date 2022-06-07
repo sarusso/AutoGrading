@@ -18,14 +18,14 @@ class TestAndGrade(unittest.TestCase):
 
     def test_correctness(self):
    
-            model = IncrementModel()
+            model = IncrementModel(3)
             self.assertEqual(model.predict([50,52,60]), 65)
    
             global score; score += 6 # Increase score  
 
     def test_correctness_negative(self):
    
-            model = IncrementModel()
+            model = IncrementModel(3)
             self.assertEqual(model.predict([60,55,50]), 45)
    
             global score; score += 1 # Increase score  
@@ -33,7 +33,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_input_value(self):
    
-            model = IncrementModel()
+            model = IncrementModel(3)
             
             with self.assertRaises(Exception):
                 model.predict([60])
@@ -49,7 +49,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_input_type(self):
         
-            model = IncrementModel()
+            model = IncrementModel(3)
    
             with self.assertRaises(TypeError):
                 model.predict({'1':1})

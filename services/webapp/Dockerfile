@@ -36,14 +36,15 @@ RUN apt-get install python3-dev -y
 # Install Docker client
 RUN apt-get install docker.io -y
 
+# Build essential for uWSGI
+RUN apt-get -y install build-essential
 
 #------------------------------
 # Python requirements
 #------------------------------
 
-# Install Flask
-RUN pip install flask==2.0.2 requests
-
+# Install Flask etc.
+RUN pip install flask==2.0.2 requests==2.28.1 uwsgi==2.0.21
 
 #------------------------------
 # Install Flask project
@@ -63,8 +64,15 @@ RUN chown -R ubuntu:ubuntu /opt/webapp
 # Entrypoint
 #------------------------------
 
-USER ubuntu
-CMD cd /opt/webapp/code && FLASK_ENV=development flask run --host=0.0.0.0
+# Run script
+COPY run.sh /
+RUN chmod 755 /run.sh
+
+# Entrypoint
+COPY entrypoint.sh /
+RUN chmod 755 /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+
 
 
 

@@ -7,6 +7,7 @@ services:
     hostname: webapp
     environment:
       - LOG_LEVEL=DEBUG
+      - DEV_SERVER=true
     ports:
       - "5000:5000"
     volumes:

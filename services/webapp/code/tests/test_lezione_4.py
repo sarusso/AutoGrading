@@ -50,10 +50,10 @@ class TestAndGrade(unittest.TestCase):
             self.assertEqual(len(data), 36)
             
             self.assertEqual(data[0][0], '1949-01')
-            self.assertEqual(data[0][1], '1') # Conversion to numerical is the next lesson
+            self.assertEqual(data[0][1].strip(), '1')
 
             self.assertEqual(data[-1][0], '1951-12')
-            self.assertEqual(data[-1][1], '36') # Conversion to numerical is the next lesson
+            self.assertEqual(data[-1][1].strip(), '36')
                              
             global score; score += 6 # Increase score  
 
@@ -67,8 +67,7 @@ class TestAndGrade(unittest.TestCase):
             
             # Check correct sum
             self.assertEqual(data, [])
-            global score; score += 2 # Increase score  
-
+            global score; score += 1 # Increase score  
 
     def test_name(self):
         with tempfile.NamedTemporaryFile('w+t') as file:
@@ -77,12 +76,24 @@ class TestAndGrade(unittest.TestCase):
             file.write('1949-01,1\n')
             file.write('1949-02,1\n')
             file.seek(0)
-    
-            csv_file = CSVFile(name = file.name)
-            data = csv_file.get_data()
-            self.assertTrue(len(data),2)
+            csv_file = CSVFile(file.name)
+            self.assertEqual(csv_file.name, file.name)
 
             global score; score += 2# Increase score
+
+    def test_no_newline_chars(self):
+        with tempfile.NamedTemporaryFile('w+t') as file:
+            
+            file.write('Date,Sales\n')
+            file.write('1949-01,1\n')
+            file.write('1949-02,2\n')
+            file.seek(0)
+    
+            csv_file = CSVFile(file.name)
+            data = csv_file.get_data()            
+            self.assertEqual(data[0][1], '1', 'Expected value "1", got "{}": Maybe check cleaning the newline character?'.format(data[0][1].replace('\n', '\\n')))
+            
+            global score; score += 1# Increase score
 
     # Print the score
     @classmethod

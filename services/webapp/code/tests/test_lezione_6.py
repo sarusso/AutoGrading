@@ -132,6 +132,7 @@ class TestAndGrade(unittest.TestCase):
             data = csv_file.get_data(start=3, end=3)
 
             self.assertEqual(len(data), 1)
+            
             self.assertEqual(data[0][0], '1949-02')
             self.assertEqual(data[0][1], '2')
 
@@ -140,6 +141,9 @@ class TestAndGrade(unittest.TestCase):
             data = csv_file.get_data(start=1, end=6)
 
             self.assertEqual(len(data), 5)
+            
+            self.assertEqual(data[0][0], '1949-01')
+            self.assertEqual(data[0][1], '1')
 
             global score; score += 1 # Increase score
 

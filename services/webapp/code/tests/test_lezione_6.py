@@ -135,6 +135,12 @@ class TestAndGrade(unittest.TestCase):
             self.assertEqual(data[0][0], '1949-02')
             self.assertEqual(data[0][1], '2')
 
+            # Check that the header is correctly discarded
+            csv_file = CSVFile(file.name)
+            data = csv_file.get_data(start=1, end=6)
+
+            self.assertEqual(len(data), 5)
+
             global score; score += 1 # Increase score
 
 

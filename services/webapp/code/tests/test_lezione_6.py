@@ -127,6 +127,14 @@ class TestAndGrade(unittest.TestCase):
             self.assertEqual(data[-1][0], '1949-04')
             self.assertEqual(data[-1][1], '4')
 
+            # Check that the a single line is returned when start == end
+            csv_file = CSVFile(file.name)
+            data = csv_file.get_data(start=3, end=3)
+
+            self.assertEqual(len(data), 1)
+            self.assertEqual(data[0][0], '1949-02')
+            self.assertEqual(data[0][1], '2')
+
             global score; score += 1 # Increase score
 
 

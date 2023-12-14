@@ -1,5 +1,12 @@
 
-from esame import FitIncrementModel
+try:
+    from esame import FitTrendModel
+except ImportError:
+    try:
+        from esame import FitIncrementModel as FitTrendModel
+        print('Deprecation warning: using old modle name "IncrementModel", please move to "TrendModel"')
+    except ImportError:
+        raise ImportError('Cannot find a class named FitTrendModel (nor FitIncrementModel)')
 
 import sys
 import unittest
@@ -18,7 +25,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_correctness(self):
    
-            model = FitIncrementModel()
+            model = FitTrendModel()
             model.fit([8,19,31,41])
             self.assertEqual(model.predict([50,52,60]), 68)
    
@@ -26,7 +33,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_correctness_negative_int(self):
     
-            model = FitIncrementModel()
+            model = FitTrendModel()
             model.fit([3,6,9,12])
             # 3+(-5) = 2, /2 = 1, 50-1 =49
             self.assertEqual(model.predict([60,55,50]), 49)
@@ -36,7 +43,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_correctness_negative_float(self):
      
-            model = FitIncrementModel()
+            model = FitTrendModel()
             model.fit([2,4,6,8])
 
             self.assertEqual(model.predict([60,55,50]), 48.5)
@@ -45,7 +52,7 @@ class TestAndGrade(unittest.TestCase):
   
     def test_input_value(self):
      
-            model = FitIncrementModel()
+            model = FitTrendModel()
               
             with self.assertRaises(Exception):
                 model.predict([60])
@@ -61,7 +68,7 @@ class TestAndGrade(unittest.TestCase):
   
     def test_input_type(self):
           
-            model = FitIncrementModel()
+            model = FitTrendModel()
      
             with self.assertRaises(TypeError):
                 model.predict({'1':1})
@@ -74,11 +81,14 @@ class TestAndGrade(unittest.TestCase):
   
     def test_base_and_inheritance(self):
         try:
-            from esame import IncrementModel
+            from esame import TrendModel
         except ImportError:
-            pass
+            try:
+                from esame import IncrementModel as TrendModel
+            except:
+                pass
         else:
-            self.assertTrue(issubclass(FitIncrementModel, IncrementModel))
+            self.assertTrue(issubclass(FitTrendModel, TrendModel))
             global score; score += 1 # Increase score  
 
 

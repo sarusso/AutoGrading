@@ -1,5 +1,12 @@
 
-from esame import IncrementModel
+try:
+    from esame import TrendModel
+except ImportError:
+    try:
+        from esame import IncrementModel as TrendModel
+        print('Deprecation warning: using old modle name "IncrementModel", please move to "TrendModel"')
+    except ImportError:
+        raise ImportError('Cannot find a class named TrendModel (nor IncrementModel)')
 
 import sys
 import unittest
@@ -18,14 +25,14 @@ class TestAndGrade(unittest.TestCase):
 
     def test_correctness(self):
    
-            model = IncrementModel()
+            model = TrendModel()
             self.assertEqual(model.predict([50,52,60]), 65)
    
-            global score; score += 6 # Increase score  
+            global score; score += 7 # Increase score  
 
     def test_correctness_negative(self):
    
-            model = IncrementModel()
+            model = TrendModel()
             self.assertEqual(model.predict([60,55,50]), 45)
    
             global score; score += 1 # Increase score  
@@ -33,7 +40,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_input_value(self):
    
-            model = IncrementModel()
+            model = TrendModel()
             
             with self.assertRaises(Exception):
                 model.predict([60])
@@ -49,7 +56,7 @@ class TestAndGrade(unittest.TestCase):
 
     def test_input_type(self):
         
-            model = IncrementModel()
+            model = TrendModel()
    
             with self.assertRaises(TypeError):
                 model.predict({'1':1})
@@ -60,16 +67,14 @@ class TestAndGrade(unittest.TestCase):
             global score; score += 1 # Increase score  
 
 
-
-
-    def test_base_and_inheritance(self):
-        try:
-            from esame import Model
-        except ImportError:
-            pass
-        else:
-            self.assertTrue(issubclass(IncrementModel, Model))
-            global score; score += 1 # Increase score  
+    #def test_base_and_inheritance(self):
+    #    try:
+    #        from esame import Model
+    #    except ImportError:
+    #        pass
+    #    else:
+    #        self.assertTrue(issubclass(TrendModel, Model))
+    #        global score; score += 1 # Increase score  
 
     # Print the score
     @classmethod

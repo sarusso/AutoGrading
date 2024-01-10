@@ -44,7 +44,7 @@ RUN apt-get -y install build-essential
 #------------------------------
 
 # Install Flask etc.
-RUN pip install flask==2.0.2 requests==2.28.1 uwsgi==2.0.21
+RUN pip install flask==2.0.2 requests==2.28.1 uwsgi==2.0.21 Werkzeug==2.2.2
 
 #------------------------------
 # Install Flask project
